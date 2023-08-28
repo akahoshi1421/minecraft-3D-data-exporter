@@ -24,8 +24,10 @@ world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時
 /** @param {Player} player */
 async function menu(player) {
 
-  const form = new ModalFormData();
-  form.title("範囲を入力してください");
+  const playerLocation = player.getHeadLocation();
+
+  const form = new ModalFormData();  
+  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y)}, ${Math.floor(playerLocation.z)})`);
   form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
   form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
   form.textField("メールアドレス", "ここに入力", email);
