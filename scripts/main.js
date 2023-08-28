@@ -8,7 +8,7 @@ import { ModalFormData } from '@minecraft/server-ui';
 const startPos = {x: 0, y: 0, z: 0};
 const endPos = {x: 0, y: 0, z: 0};
 let email = "";
-let toggleValue = true;
+let toggleValue = false;
 
 // 特定のアイテムを使った時にFormを開く例
 world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
