@@ -68,14 +68,15 @@ async function menu(player) {
   email = formValues[2];
   toggleValue = formValues[3];
 
-  // サーバに送信しないモードなら抜ける
-  if(toggleValue === false) return;
-
   //メールの形が正しくなければ抜ける
   if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
     player.sendMessage("メールの形が正しくありません");
     return;
   }
+
+  // サーバに送信しないモードなら抜ける
+  if(toggleValue === false) return;
+ 
 
   const result = structureLoad(player);
 
