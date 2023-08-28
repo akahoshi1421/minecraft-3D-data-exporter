@@ -31,7 +31,7 @@ async function menu(player) {
   form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
   form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
   form.textField("メールアドレス", "ここに入力", email);
-  form.toggle("サーバに送信しますか？", false);
+  form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
   
@@ -47,7 +47,14 @@ async function menu(player) {
   email = formValues[2];
   toggleValue = formValues[3];
 
+  // サーバに送信しないモードなら抜ける
   if(toggleValue === false) return;
+
+  //メールの形が正しくなければ抜ける
+  if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
+    player.sendMessage("メールの形が正しくありません");
+    return;
+  }
 
   const result = structureLoad(player);
 
