@@ -8,6 +8,7 @@ import { ModalFormData } from '@minecraft/server-ui';
 const startPos = {x: 0, y: 0, z: 0};
 const endPos = {x: 0, y: 0, z: 0};
 let email = "";
+let toggleValue = true;
 
 // 特定のアイテムを使った時にFormを開く例
 world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
@@ -23,11 +24,14 @@ world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時
 /** @param {Player} player */
 async function menu(player) {
 
-  const form = new ModalFormData();
-  form.title("範囲を入力してください");
+  const playerLocation = player.getHeadLocation();
+
+  const form = new ModalFormData();  
+  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
   form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
   form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
   form.textField("メールアドレス", "ここに入力", email);
+  form.toggle("サーバに送信しますか？", false);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
   
@@ -41,7 +45,9 @@ async function menu(player) {
   [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
   [endPos.x, endPos.y, endPos.z] = formValues[1].split(",").map(n => Number(n));
   email = formValues[2];
-  
+  toggleValue = formValues[3];
+
+  if(toggleValue === false) return;
 
   const result = structureLoad(player);
 
@@ -62,14 +68,18 @@ function structureLoad(player){
   const zMin = startPos.z <= endPos.z ? startPos.z : endPos.z;
   const zMax = startPos.z > endPos.z ? startPos.z : endPos.z;
 
+  let y = 0;
+  let x = 0;
+  let z = 0;
+
   try{
-    for(let y = yMin; y <= yMax; y++){
+    for(y = yMin; y <= yMax; y++){
       const xArray = [];
   
-      for(let x = xMin; x <= xMax; x++){
+      for(x = xMin; x <= xMax; x++){
         const zArray = [];
   
-        for(let z = zMin; z<= zMax; z++){
+        for(z = zMin; z<= zMax; z++){
           const blockData = yourWorld.getBlock({x: x, y: y, z: z});
           if(!blockData.permutation.matches("air")){
             zArray.push(1);
@@ -86,7 +96,7 @@ function structureLoad(player){
     }
   }
   catch(e){
-    player.sendMessage(`${e}`);
+    player.sendMessage(`${x}, ${y}, ${z}   ${e}`);
   }
   
 
