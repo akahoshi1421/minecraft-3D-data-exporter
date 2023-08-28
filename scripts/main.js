@@ -42,12 +42,24 @@ async function menu(player) {
     player.sendMessage("座標はカンマ「,」区切りです。");
     return;
   }
+
+  // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
+  if(formValues[0].split(",").filter(n => Number(n) === NaN).length !== 0){
+    player.sendMessage("始点座標が不正な値です。");
+    return;
+  }
     
   [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
 
   // 終点座標が不正な値(,数の不整合)なら抜ける
   if(formValues[1].split(",").length !== 3){
     player.sendMessage("座標はカンマ「,」区切りです。");
+    return;
+  }
+
+  // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
+  if(formValues[1].split(",").filter(n => Number(n) === NaN).length !== 0){
+    player.sendMessage("終点座標が不正な値です。");
     return;
   }
 
