@@ -33,9 +33,9 @@ async function menu(player) {
 
   const form = new ModalFormData();  
   form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
-  form.textField("始点座標(,区切り)", "ここに入力", `${startPosString}`);
-  form.textField("終点座標(,区切り)", "ここに入力", `${endPosString}`);
-  form.textField("メールアドレス", "ここに入力", email);
+  form.textField("始点座標(,区切り)", "0,0,0", `${startPosString}`);
+  form.textField("終点座標(,区切り)", "0,0,0", `${endPosString}`);
+  form.textField("メールアドレス", "hoge@example.com", email);
   form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
