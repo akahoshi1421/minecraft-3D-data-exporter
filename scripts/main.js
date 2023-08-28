@@ -27,7 +27,7 @@ async function menu(player) {
   const playerLocation = player.getHeadLocation();
 
   const form = new ModalFormData();  
-  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y)}, ${Math.floor(playerLocation.z)})`);
+  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
   form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
   form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
   form.textField("メールアドレス", "ここに入力", email);
@@ -68,14 +68,18 @@ function structureLoad(player){
   const zMin = startPos.z <= endPos.z ? startPos.z : endPos.z;
   const zMax = startPos.z > endPos.z ? startPos.z : endPos.z;
 
+  let y = 0;
+  let x = 0;
+  let z = 0;
+
   try{
-    for(let y = yMin; y <= yMax; y++){
+    for(y = yMin; y <= yMax; y++){
       const xArray = [];
   
-      for(let x = xMin; x <= xMax; x++){
+      for(x = xMin; x <= xMax; x++){
         const zArray = [];
   
-        for(let z = zMin; z<= zMax; z++){
+        for(z = zMin; z<= zMax; z++){
           const blockData = yourWorld.getBlock({x: x, y: y, z: z});
           if(!blockData.permutation.matches("air")){
             zArray.push(1);
@@ -92,7 +96,7 @@ function structureLoad(player){
     }
   }
   catch(e){
-    player.sendMessage(`${e}`);
+    player.sendMessage(`${x}, ${y}, ${z}   ${e}`);
   }
   
 
