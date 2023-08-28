@@ -5,10 +5,15 @@
 import { world, Player } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
+//内部処理用座標
 const startPos = {x: 0, y: 0, z: 0};
 const endPos = {x: 0, y: 0, z: 0};
+
+//メニュー保存用
+let startPosString = "";
+let endPosString = "";
 let email = "";
-let toggleValue = true;
+let toggleValue = false;
 
 // 特定のアイテムを使った時にFormを開く例
 world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
@@ -28,26 +33,58 @@ async function menu(player) {
 
   const form = new ModalFormData();  
   form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
-  form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
-  form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
-  form.textField("メールアドレス", "ここに入力", email);
-  form.toggle("サーバに送信しますか？", false);
+  form.textField("始点座標(,区切り)", "0,0,0", `${startPosString}`);
+  form.textField("終点座標(,区切り)", "0,0,0", `${endPosString}`);
+  form.textField("メールアドレス", "hoge@example.com", email);
+  form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
   
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
-  if(formValues[0].split(",").length !== 3 || formValues[1].split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
-  }
-    
-  [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
-  [endPos.x, endPos.y, endPos.z] = formValues[1].split(",").map(n => Number(n));
+  //メニュー保存
+  startPosString = formValues[0];
+  endPosString = formValues[1];
   email = formValues[2];
   toggleValue = formValues[3];
 
+  // 始点座標が不正な値(,数の不整合)なら抜ける 
+  if(startPosString.split(",").length !== 3){
+    player.sendMessage("座標はカンマ「,」区切りです。");
+    return;
+  }
+
+  // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
+  if(startPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
+    player.sendMessage(`始点座標が不正な値です。`);
+    return;
+  }
+    
+  [startPos.x, startPos.y, startPos.z] = startPosString.split(",").map(n => Number(n));
+
+  // 終点座標が不正な値(,数の不整合)なら抜ける
+  if(endPosString.split(",").length !== 3){
+    player.sendMessage("座標はカンマ「,」区切りです。");
+    return;
+  }
+
+  // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
+  if(endPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
+    player.sendMessage("終点座標が不正な値です。");
+    return;
+  }
+
+  [endPos.x, endPos.y, endPos.z] = endPosString.split(",").map(n => Number(n));
+
+  //メールの形が正しくなければ抜ける
+  if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
+    player.sendMessage("メールの形が正しくありません");
+    return;
+  }
+
+  // サーバに送信しないモードなら抜ける
   if(toggleValue === false) return;
+ 
 
   const result = structureLoad(player);
 
