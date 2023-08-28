@@ -33,7 +33,7 @@ async function menu(player) {
   
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
-  if(formValues[0].split(",").length + formValues[1].split(",").length !== 6){
+  if(formValues[0].split(",").length !== 3 || formValues[1].split(",").length !== 3){
     player.sendMessage("座標はカンマ「,」区切りです。");
     return;
   }
