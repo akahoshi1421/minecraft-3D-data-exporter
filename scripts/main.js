@@ -44,8 +44,8 @@ async function menu(player) {
   }
 
   // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(formValues[0].split(",").filter(n => Number(n) === NaN).length !== 0){
-    player.sendMessage("始点座標が不正な値です。");
+  if(formValues[0].split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
+    player.sendMessage(`始点座標が不正な値です。`);
     return;
   }
     
@@ -58,7 +58,7 @@ async function menu(player) {
   }
 
   // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(formValues[1].split(",").filter(n => Number(n) === NaN).length !== 0){
+  if(formValues[1].split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
     player.sendMessage("終点座標が不正な値です。");
     return;
   }
