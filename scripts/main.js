@@ -37,13 +37,22 @@ async function menu(player) {
   
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
-  if(formValues[0].split(",").length !== 3 || formValues[1].split(",").length !== 3){
+  // 始点座標が不正な値(,数の不整合)なら抜ける 
+  if(formValues[0].split(",").length !== 3){
     player.sendMessage("座標はカンマ「,」区切りです。");
     return;
   }
     
   [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
+
+  // 終点座標が不正な値(,数の不整合)なら抜ける
+  if(formValues[1].split(",").length !== 3){
+    player.sendMessage("座標はカンマ「,」区切りです。");
+    return;
+  }
+
   [endPos.x, endPos.y, endPos.z] = formValues[1].split(",").map(n => Number(n));
+
   email = formValues[2];
   toggleValue = formValues[3];
 
