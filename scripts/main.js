@@ -5,8 +5,13 @@
 import { world, Player } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
+//内部処理用座標
 const startPos = {x: 0, y: 0, z: 0};
 const endPos = {x: 0, y: 0, z: 0};
+
+//メニュー保存用
+let startPosString = "";
+let endPosString = "";
 let email = "";
 let toggleValue = false;
 
@@ -28,8 +33,8 @@ async function menu(player) {
 
   const form = new ModalFormData();  
   form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
-  form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
-  form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
+  form.textField("始点座標(,区切り)", "ここに入力", `${startPosString}`);
+  form.textField("終点座標(,区切り)", "ここに入力", `${endPosString}`);
   form.textField("メールアドレス", "ここに入力", email);
   form.toggle("サーバに送信しますか？", toggleValue);
 
@@ -37,36 +42,39 @@ async function menu(player) {
   
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
+  //メニュー保存
+  startPosString = formValues[0];
+  endPosString = formValues[1];
+  email = formValues[2];
+  toggleValue = formValues[3];
+
   // 始点座標が不正な値(,数の不整合)なら抜ける 
-  if(formValues[0].split(",").length !== 3){
+  if(startPosString.split(",").length !== 3){
     player.sendMessage("座標はカンマ「,」区切りです。");
     return;
   }
 
   // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(formValues[0].split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
+  if(startPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
     player.sendMessage(`始点座標が不正な値です。`);
     return;
   }
     
-  [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
+  [startPos.x, startPos.y, startPos.z] = startPosString.split(",").map(n => Number(n));
 
   // 終点座標が不正な値(,数の不整合)なら抜ける
-  if(formValues[1].split(",").length !== 3){
+  if(endPosString.split(",").length !== 3){
     player.sendMessage("座標はカンマ「,」区切りです。");
     return;
   }
 
   // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(formValues[1].split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
+  if(endPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
     player.sendMessage("終点座標が不正な値です。");
     return;
   }
 
-  [endPos.x, endPos.y, endPos.z] = formValues[1].split(",").map(n => Number(n));
-
-  email = formValues[2];
-  toggleValue = formValues[3];
+  [endPos.x, endPos.y, endPos.z] = endPosString.split(",").map(n => Number(n));
 
   //メールの形が正しくなければ抜ける
   if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
