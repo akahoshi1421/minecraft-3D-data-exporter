@@ -12,7 +12,7 @@ const endPos = {x: 0, y: 0, z: 0};
 //メニュー保存用
 let startPosString = "";
 let endPosString = "";
-let email = world.getDynamicProperty("email") || "";
+let email = "";
 let toggleValue = false;
 
 // 特定のアイテムを使った時にFormを開く例
@@ -45,7 +45,7 @@ async function menu(player) {
   //メニュー保存
   startPosString = formValues[0];
   endPosString = formValues[1];
-  email = world.setDynamicProperty("email", formValues[2]);
+  email = formValues[2];
   toggleValue = formValues[3];
 
   // 始点座標が不正な値(,数の不整合)なら抜ける 
