@@ -50,7 +50,7 @@ function positionRegister(player){
     startPos.y = y;
     startPos.z = z;
 
-    player.sendMessage(`始点座標が登録されました (${x}, ${y}, ${z})`);
+    player.sendMessage(`始点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
   }
   // 終点座標の登録
   else{
@@ -58,7 +58,7 @@ function positionRegister(player){
     endPos.y = y;
     endPos.z = z;
 
-    player.sendMessage(`終点座標が登録されました (${x}, ${y}, ${z})`);
+    player.sendMessage(`終点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
   }
 
   positionIs = !positionIs;
