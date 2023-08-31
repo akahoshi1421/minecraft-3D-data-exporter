@@ -2,7 +2,7 @@
  * Supported by RetoRuto9900K
  */
 
-import { world, Player } from '@minecraft/server';
+import { world, Player, system } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
 //内部処理用座標
@@ -15,16 +15,55 @@ let endPosString = "";
 let email = "";
 let toggleValue = false;
 
+// 始点終点フラグ(始点がfalse、終点がtrue)
+let positionIs = false;
+
 // 特定のアイテムを使った時にFormを開く例
 world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
   if (!(event.source instanceof Player)) return; // プレイヤーでなければ処理を抜ける
 
   const player = event.source; // 変数に使った人(Player)を代入
-  
-  if (event.itemStack.typeId === 'minecraft:stick') { // 使ったアイテムのtypeIdが棒だったら
-    menu(player).catch(console.error); // Formを表示
+
+  switch(event.itemStack.typeId){
+    case "minecraft:stick":
+      menu(player).catch(console.error); // Formを表示
+      break;
+
+    case "minecraft:diamond_sword":
+      positionRegister(player); // 座標登録処理
+      break;
+
+    default:
+      break;
   }
 });
+
+/** @param {Player} player */
+function positionRegister(player){
+  //プレイヤーの座標取り出し
+  const playerLocation = player.getHeadLocation();
+  const [x, y, z] = [Math.floor(playerLocation.x), Math.floor(playerLocation.y) - 1, Math.floor(playerLocation.z)];
+
+  // 始点座標の登録
+  if(!positionIs){
+    startPos.x = x;
+    startPos.y = y;
+    startPos.z = z;
+
+    player.sendMessage(`始点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
+  }
+  // 終点座標の登録
+  else{
+    endPos.x = x;
+    endPos.y = y;
+    endPos.z = z;
+
+    player.sendMessage(`終点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
+  }
+
+  positionIs = !positionIs;
+}
+
 
 /** @param {Player} player */
 async function menu(player) {
@@ -32,10 +71,11 @@ async function menu(player) {
   const playerLocation = player.getHeadLocation();
 
   const form = new ModalFormData();  
-  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
-  form.textField("始点座標(,区切り)", "0,0,0", `${startPosString}`);
-  form.textField("終点座標(,区切り)", "0,0,0", `${endPosString}`);
-  form.textField("メールアドレス", "hoge@example.com", email);
+  form.title("メールアドレスを入力してください");
+  form.textField(`現在登録された座標は\n
+  始点座標: (§l§c${startPos.x}, ${startPos.y}, ${startPos.z}§r)\n
+  終点座標: (§l§c${endPos.x}, ${endPos.y}, ${endPos.z}§r)\n\n
+  メールアドレス`, "hoge@example.com", email);
   form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
@@ -43,38 +83,8 @@ async function menu(player) {
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
   //メニュー保存
-  startPosString = formValues[0];
-  endPosString = formValues[1];
-  email = formValues[2];
-  toggleValue = formValues[3];
-
-  // 始点座標が不正な値(,数の不整合)なら抜ける 
-  if(startPosString.split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
-  }
-
-  // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(startPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
-    player.sendMessage(`始点座標が不正な値です。`);
-    return;
-  }
-    
-  [startPos.x, startPos.y, startPos.z] = startPosString.split(",").map(n => Number(n));
-
-  // 終点座標が不正な値(,数の不整合)なら抜ける
-  if(endPosString.split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
-  }
-
-  // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(endPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
-    player.sendMessage("終点座標が不正な値です。");
-    return;
-  }
-
-  [endPos.x, endPos.y, endPos.z] = endPosString.split(",").map(n => Number(n));
+  email = formValues[0];
+  toggleValue = formValues[1];
 
   //メールの形が正しくなければ抜ける
   if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
