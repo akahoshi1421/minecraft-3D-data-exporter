@@ -15,15 +15,14 @@ let endPosString = "";
 let email = "";
 let toggleValue = false;
 
+// 始点終点フラグ(始点がfalse、終点がtrue)
+let positionIs = false;
+
 // 特定のアイテムを使った時にFormを開く例
 world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
   if (!(event.source instanceof Player)) return; // プレイヤーでなければ処理を抜ける
 
   const player = event.source; // 変数に使った人(Player)を代入
-  
-  if (event.itemStack.typeId === 'minecraft:stick') { // 使ったアイテムのtypeIdが棒だったら
-    menu(player).catch(console.error); // Formを表示
-  }
 
   switch(event.itemStack.typeId){
     case "minecraft:stick":
@@ -31,9 +30,9 @@ world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時
       break;
 
     case "minecraft:diamond_sword":
-      positionRegister(player);
+      positionRegister(player); // 座標登録処理
       break;
-      
+
     default:
       break;
   }
@@ -41,7 +40,22 @@ world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時
 
 /** @param {Player} player */
 function positionRegister(player){
+  //プレイヤーの座標取り出し
+  const playerLocation = player.getHeadLocation();
+  const [x, y, z] = [Math.floor(playerLocation.x), Math.floor(playerLocation.y) - 1, Math.floor(playerLocation.z)];
 
+  // 始点座標の登録
+  if(!positionIs){
+    startPos = {x, y, z};
+    player.sendMessage(`始点座標が登録されました ${x}, ${y}, ${z}`);
+  }
+  // 終点座標の登録
+  else{
+    endPos = {x, y, z};
+    player.sendMessage(`終点座標が登録されました ${x}, ${y}, ${z}`);
+  }
+
+  positionIs = !positionIs;
 }
 
 
