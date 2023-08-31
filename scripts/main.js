@@ -2,7 +2,7 @@
  * Supported by RetoRuto9900K
  */
 
-import { world, Player } from '@minecraft/server';
+import { world, Player, system } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
 //内部処理用座標
