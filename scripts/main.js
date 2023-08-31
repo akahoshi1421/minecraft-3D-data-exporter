@@ -46,13 +46,19 @@ function positionRegister(player){
 
   // 始点座標の登録
   if(!positionIs){
-    startPos = {x, y, z};
-    player.sendMessage(`始点座標が登録されました ${x}, ${y}, ${z}`);
+    startPos.x = x;
+    startPos.y = y;
+    startPos.z = z;
+
+    player.sendMessage(`始点座標が登録されました (${x}, ${y}, ${z})`);
   }
   // 終点座標の登録
   else{
-    endPos = {x, y, z};
-    player.sendMessage(`終点座標が登録されました ${x}, ${y}, ${z}`);
+    endPos.x = x;
+    endPos.y = y;
+    endPos.z = z;
+
+    player.sendMessage(`終点座標が登録されました (${x}, ${y}, ${z})`);
   }
 
   positionIs = !positionIs;
@@ -66,9 +72,9 @@ async function menu(player) {
 
   const form = new ModalFormData();  
   form.title("メールアドレスを入力してください");
-  form.textField(`現在登録された座標は\n\n
-  始点座標: §l§4${startPos.x}, ${startPos.y}, ${startPos.z}§r\n
-  始点座標: §l§4${endPos.x}, ${endPos.y}, ${endPos.z}§r\n\n
+  form.textField(`現在登録された座標は\n
+  始点座標: (§l§c${startPos.x}, ${startPos.y}, ${startPos.z}§r)\n
+  終点座標: (§l§c${endPos.x}, ${endPos.y}, ${endPos.z}§r)\n\n
   メールアドレス`, "hoge@example.com", email);
   form.toggle("サーバに送信しますか？", toggleValue);
 
