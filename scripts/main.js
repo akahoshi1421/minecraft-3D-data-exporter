@@ -24,7 +24,26 @@ world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時
   if (event.itemStack.typeId === 'minecraft:stick') { // 使ったアイテムのtypeIdが棒だったら
     menu(player).catch(console.error); // Formを表示
   }
+
+  switch(event.itemStack.typeId){
+    case "minecraft:stick":
+      menu(player).catch(console.error); // Formを表示
+      break;
+
+    case "minecraft:diamond_sword":
+      positionRegister(player);
+      break;
+      
+    default:
+      break;
+  }
 });
+
+/** @param {Player} player */
+function positionRegister(player){
+
+}
+
 
 /** @param {Player} player */
 async function menu(player) {
