@@ -66,7 +66,10 @@ async function menu(player) {
 
   const form = new ModalFormData();  
   form.title("メールアドレスを入力してください");
-  form.textField("メールアドレス", "hoge@example.com", email);
+  form.textField(`現在登録された座標は\n\n
+  始点座標: §l§4${startPos.x}, ${startPos.y}, ${startPos.z}§r\n
+  始点座標: §l§4${endPos.x}, ${endPos.y}, ${endPos.z}§r\n\n
+  メールアドレス`, "hoge@example.com", email);
   form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
@@ -74,38 +77,8 @@ async function menu(player) {
   if (canceled) return; // キャンセルされていたら処理を抜ける
 
   //メニュー保存
-  startPosString = formValues[0];
-  endPosString = formValues[1];
-  email = formValues[2];
-  toggleValue = formValues[3];
-
-  // 始点座標が不正な値(,数の不整合)なら抜ける 
-  if(startPosString.split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
-  }
-
-  // 始点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(startPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
-    player.sendMessage(`始点座標が不正な値です。`);
-    return;
-  }
-    
-  [startPos.x, startPos.y, startPos.z] = startPosString.split(",").map(n => Number(n));
-
-  // 終点座標が不正な値(,数の不整合)なら抜ける
-  if(endPosString.split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
-  }
-
-  // 終点座標が不正な値(数字ではない値が入っている)なら抜ける
-  if(endPosString.split(",").filter(n => Number.isNaN(Number(n))).length !== 0){
-    player.sendMessage("終点座標が不正な値です。");
-    return;
-  }
-
-  [endPos.x, endPos.y, endPos.z] = endPosString.split(",").map(n => Number(n));
+  email = formValues[0];
+  toggleValue = formValues[1];
 
   //メールの形が正しくなければ抜ける
   if(!email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)){
