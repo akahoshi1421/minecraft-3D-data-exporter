@@ -1,5 +1,6 @@
 const blockDict = {
   ignoreBlocks: [
+    "air",
     "rail",
     "golden_rail",
     "detector_rail",

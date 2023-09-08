@@ -1,4 +1,5 @@
 import { world, Player } from "@minecraft/server";
+import { whichBlock } from "./whichBlock";
 
 /**
  * 指定範囲の構造物をJSONデータに変換します。
@@ -40,12 +41,7 @@ function structureLoad(player, startPos, endPos) {
         }
 
         const block = blockData.split(":")[1];
-
-        if (blockData.typeId !== "air") {
-          zArray.push(1);
-        } else {
-          zArray.push(0);
-        }
+        zArray.push(whichBlock(block, blockData));
       }
 
       xArray.push(zArray);
