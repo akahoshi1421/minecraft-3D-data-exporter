@@ -36,7 +36,7 @@ function structureLoad(player, startPos, endPos) {
         const blockData = yourWorld.getBlock({ x: x, y: y, z: z });
 
         if (blockData === undefined) {
-          player.sendMessage("block data is unkown");
+          player.sendMessage("block data is unknown");
           throw new Error("block data is unknown");
         }
 
