@@ -2,103 +2,130 @@
  * Supported by RetoRuto9900K
  */
 
-import { world, Player } from '@minecraft/server';
-import { ModalFormData } from '@minecraft/server-ui';
+import { world, Player, system } from "@minecraft/server";
+import { ModalFormData } from "@minecraft/server-ui";
+import { structureLoad } from "./blockData/structureLoad";
 
-const startPos = {x: 0, y: 0, z: 0};
-const endPos = {x: 0, y: 0, z: 0};
+// Subscribe to an event that calls every Minecraft tick
+// system.runInterval(() => {
+//   // Spams the chat with "Hello World" with world.sendMessage function in API
+//   // or run a command in overworld dimension
+//   // using native API methods (such as world.sendMessage) are recommended whenever possible.
+//   const d = world.getDimension("overworld");
+//   try {
+//     const blockData = d.getBlock({ x: 0, y: 0, z: 0 });
+//     d.getPlayers()[0].sendMessage(
+//       `${JSON.stringify(blockData.permutation.getAllStates())}   ${
+//         blockData.type.id
+//       }`
+//     );
+//   } catch (e) {
+//     d.runCommand(`say ${e}`);
+//   }
+// }, 60);
+
+//内部処理用座標
+const startPos = { x: 0, y: 0, z: 0 };
+const endPos = { x: 0, y: 0, z: 0 };
+
+//メニュー保存用
 let email = "";
-let toggleValue = true;
+let toggleValue = false;
+
+// 始点終点フラグ(始点がfalse、終点がtrue)
+let positionIs = false;
 
 // 特定のアイテムを使った時にFormを開く例
-world.afterEvents.itemUse.subscribe(event => { // アイテムを使用した時に動くイベント
+world.afterEvents.itemUse.subscribe((event) => {
+  // アイテムを使用した時に動くイベント
   if (!(event.source instanceof Player)) return; // プレイヤーでなければ処理を抜ける
 
   const player = event.source; // 変数に使った人(Player)を代入
-  
-  if (event.itemStack.typeId === 'minecraft:stick') { // 使ったアイテムのtypeIdが棒だったら
-    menu(player).catch(console.error); // Formを表示
+
+  switch (event.itemStack.typeId) {
+    case "minecraft:stick":
+      menu(player).catch(console.error); // Formを表示
+      break;
+
+    case "minecraft:diamond_sword":
+      positionRegister(player); // 座標登録処理
+      break;
+
+    default:
+      break;
   }
 });
 
 /** @param {Player} player */
-async function menu(player) {
-
+function positionRegister(player) {
+  //プレイヤーの座標取り出し
   const playerLocation = player.getHeadLocation();
+  const [x, y, z] = [
+    Math.floor(playerLocation.x),
+    Math.floor(playerLocation.y) - 1,
+    Math.floor(playerLocation.z),
+  ];
 
-  const form = new ModalFormData();  
-  form.title(`範囲を入力してください §l§4現在座標(${Math.floor(playerLocation.x)}, ${Math.floor(playerLocation.y) - 1}, ${Math.floor(playerLocation.z)})`);
-  form.textField("始点座標(,区切り)", "ここに入力", `${startPos.x},${startPos.y},${startPos.z}`);
-  form.textField("終点座標(,区切り)", "ここに入力", `${endPos.x},${endPos.y},${endPos.z}`);
-  form.textField("メールアドレス", "ここに入力", email);
-  form.toggle("サーバに送信しますか？", false);
+  // 始点座標の登録
+  if (!positionIs) {
+    startPos.x = x;
+    startPos.y = y;
+    startPos.z = z;
 
-  const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
-  
-  if (canceled) return; // キャンセルされていたら処理を抜ける
-
-  if(formValues[0].split(",").length !== 3 || formValues[1].split(",").length !== 3){
-    player.sendMessage("座標はカンマ「,」区切りです。");
-    return;
+    player.sendMessage(`始点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
   }
-    
-  [startPos.x, startPos.y, startPos.z] = formValues[0].split(",").map(n => Number(n));
-  [endPos.x, endPos.y, endPos.z] = formValues[1].split(",").map(n => Number(n));
-  email = formValues[2];
-  toggleValue = formValues[3];
+  // 終点座標の登録
+  else {
+    endPos.x = x;
+    endPos.y = y;
+    endPos.z = z;
 
-  if(toggleValue === false) return;
+    player.sendMessage(`終点座標が登録されました (§l§c${x}, ${y}, ${z}§r)`);
+  }
 
-  const result = structureLoad(player);
-
-  player.runCommand(`say ${JSON.stringify({email: email, structure: result})}`);
+  positionIs = !positionIs;
 }
 
-function structureLoad(player){
-  const resultStrcture = [];
-  
-  const yourWorld = world.getDimension("overworld");
+/** @param {Player} player */
+async function menu(player) {
+  const playerLocation = player.getHeadLocation();
 
-  const xMin = startPos.x <= endPos.x ? startPos.x : endPos.x;
-  const xMax = startPos.x > endPos.x ? startPos.x : endPos.x;
+  const form = new ModalFormData();
+  form.title("メールアドレスを入力してください");
+  form.textField(
+    `現在登録された座標は\n
+  始点座標: (§l§c${startPos.x}, ${startPos.y}, ${startPos.z}§r)\n
+  終点座標: (§l§c${endPos.x}, ${endPos.y}, ${endPos.z}§r)\n\n
+  メールアドレス`,
+    "hoge@example.com",
+    email
+  );
+  form.toggle("サーバに送信しますか？", toggleValue);
 
-  const yMin = startPos.y <= endPos.y ? startPos.y : endPos.y;
-  const yMax = startPos.y > endPos.y ? startPos.y : endPos.y;
+  const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
 
-  const zMin = startPos.z <= endPos.z ? startPos.z : endPos.z;
-  const zMax = startPos.z > endPos.z ? startPos.z : endPos.z;
+  if (canceled) return; // キャンセルされていたら処理を抜ける
 
-  let y = 0;
-  let x = 0;
-  let z = 0;
+  //メニュー保存
+  email = formValues[0];
+  toggleValue = formValues[1];
 
-  try{
-    for(y = yMin; y <= yMax; y++){
-      const xArray = [];
-  
-      for(x = xMin; x <= xMax; x++){
-        const zArray = [];
-  
-        for(z = zMin; z<= zMax; z++){
-          const blockData = yourWorld.getBlock({x: x, y: y, z: z});
-          if(!blockData.permutation.matches("air")){
-            zArray.push(1);
-          }
-          else{
-            zArray.push(0);
-          }
-        }
-  
-        xArray.push(zArray);
-      }
-  
-      resultStrcture.push(xArray);
-    }
+  //メールの形が正しくなければ抜ける
+  if (
+    !email.match(
+      /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+    )
+  ) {
+    player.sendMessage("メールの形が正しくありません");
+    return;
   }
-  catch(e){
-    player.sendMessage(`${x}, ${y}, ${z}   ${e}`);
-  }
-  
 
- return resultStrcture;
+  // サーバに送信しないモードなら抜ける
+  if (toggleValue === false) return;
+
+  const result = structureLoad(player, startPos, endPos);
+
+  player.runCommand(
+    `say ${JSON.stringify({ email: email, structure: result })}`
+  );
 }
