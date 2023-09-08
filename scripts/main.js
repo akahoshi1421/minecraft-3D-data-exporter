@@ -4,6 +4,23 @@
 
 import { world, Player, system } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
+import { structureLoad } from './blockData/structureLoad';
+
+// Subscribe to an event that calls every Minecraft tick
+system.runInterval(() => {
+	// Spams the chat with "Hello World" with world.sendMessage function in API
+	// or run a command in overworld dimension
+	// using native API methods (such as world.sendMessage) are recommended whenever possible.
+	const d = world.getDimension("overworld");
+    try{
+        const blockData = d.getBlock({x: 0, y: 0, z: 0});
+        d.getPlayers()[0].sendMessage(`${JSON.stringify(blockData.permutation.getAllStates())}   ${blockData.type.id}`);
+    }catch(e){
+        d.runCommand(`say ${e}`);
+    }
+    
+    
+},60);
 
 //内部処理用座標
 const startPos = {x: 0, y: 0, z: 0};
@@ -96,56 +113,7 @@ async function menu(player) {
   if(toggleValue === false) return;
  
 
-  const result = structureLoad(player);
+  const result = structureLoad(player, startPos, endPos);
 
   player.runCommand(`say ${JSON.stringify({email: email, structure: result})}`);
-}
-
-function structureLoad(player){
-  const resultStrcture = [];
-  
-  const yourWorld = world.getDimension("overworld");
-
-  const xMin = startPos.x <= endPos.x ? startPos.x : endPos.x;
-  const xMax = startPos.x > endPos.x ? startPos.x : endPos.x;
-
-  const yMin = startPos.y <= endPos.y ? startPos.y : endPos.y;
-  const yMax = startPos.y > endPos.y ? startPos.y : endPos.y;
-
-  const zMin = startPos.z <= endPos.z ? startPos.z : endPos.z;
-  const zMax = startPos.z > endPos.z ? startPos.z : endPos.z;
-
-  let y = 0;
-  let x = 0;
-  let z = 0;
-
-  try{
-    for(y = yMin; y <= yMax; y++){
-      const xArray = [];
-  
-      for(x = xMin; x <= xMax; x++){
-        const zArray = [];
-  
-        for(z = zMin; z<= zMax; z++){
-          const blockData = yourWorld.getBlock({x: x, y: y, z: z});
-          if(!blockData.permutation.matches("air")){
-            zArray.push(1);
-          }
-          else{
-            zArray.push(0);
-          }
-        }
-  
-        xArray.push(zArray);
-      }
-  
-      resultStrcture.push(xArray);
-    }
-  }
-  catch(e){
-    player.sendMessage(`${x}, ${y}, ${z}   ${e}`);
-  }
-  
-
- return resultStrcture;
 }
