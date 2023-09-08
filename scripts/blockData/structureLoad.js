@@ -7,9 +7,9 @@ import { world, Player } from "@minecraft/server";
  * @param endPos 終点座標
  * @returns 構造物データ
  */
-function structureLoad(player, startPos, endPos){
+function structureLoad(player, startPos, endPos) {
   const resultStrcture = [];
-  
+
   const yourWorld = world.getDimension("overworld");
 
   const xMin = startPos.x <= endPos.x ? startPos.x : endPos.x;
@@ -21,39 +21,40 @@ function structureLoad(player, startPos, endPos){
   const zMin = startPos.z <= endPos.z ? startPos.z : endPos.z;
   const zMax = startPos.z > endPos.z ? startPos.z : endPos.z;
 
-//   let y = 0;
+  //   let y = 0;
   let x = 0;
   let z = 0;
 
-  try{
-    for(y = yMin; y <= yMax; y++){
-      const xArray = [];
-  
-      for(x = xMin; x <= xMax; x++){
-        const zArray = [];
-  
-        for(z = zMin; z<= zMax; z++){
-          const blockData = yourWorld.getBlock({x: x, y: y, z: z});
-          if(!blockData.permutation.matches("air")){
-            zArray.push(1);
-          }
-          else{
-            zArray.push(0);
-          }
-        }
-  
-        xArray.push(zArray);
-      }
-  
-      resultStrcture.push(xArray);
-    }
-  }
-  catch(e){
-    player.sendMessage(`${x}, ${y}, ${z}   ${e}`);
-  }
-  
+  for (y = yMin; y <= yMax; y++) {
+    const xArray = [];
 
- return resultStrcture;
+    for (x = xMin; x <= xMax; x++) {
+      const zArray = [];
+
+      for (z = zMin; z <= zMax; z++) {
+        const blockData = yourWorld.getBlock({ x: x, y: y, z: z });
+
+        if (blockData === undefined) {
+          player.sendMessage("block data is unkown");
+          throw new Error("block data is unknown");
+        }
+
+        const block = blockData.split(":")[1];
+
+        if (blockData.typeId !== "air") {
+          zArray.push(1);
+        } else {
+          zArray.push(0);
+        }
+      }
+
+      xArray.push(zArray);
+    }
+
+    resultStrcture.push(xArray);
+  }
+
+  return resultStrcture;
 }
 
-export { structureLoad }
+export { structureLoad };
