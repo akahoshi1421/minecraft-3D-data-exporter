@@ -10,15 +10,15 @@ import { blockDict } from "../lib/dict";
 function whichBlock(block, blockData) {
   const data = blockData.permutation.getAllStates();
 
-  if (block in blockDict.ignoreBlocks) {
+  if (blockDict.ignoreBlocks.includes(block)) {
     return 0;
   }
 
-  if (block in blockDict.carpetBlocks) {
+  if (blockDict.carpetBlocks.includes(block)) {
     return 2;
   }
 
-  if (block in blockDict.halfBlocks) {
+  if (blockDict.halfBlocks.includes(block)) {
     if (data.top_slot_bit) {
       return 3.0;
     } else {
@@ -26,7 +26,7 @@ function whichBlock(block, blockData) {
     }
   }
 
-  if (block in blockDict.stairBlocks) {
+  if (blockDict.stairBlocks.includes(block)) {
     if (!data.upside_down_bit && data.weirdo_direction === 1) {
       return 4.0;
     }
