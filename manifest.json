@@ -1,36 +1,36 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "ブロックPOSTくん",
-        "description": "指定した範囲のブロックのデータをサーバに投げてくれます",
-        "uuid": "322d19ff-0646-466e-8f1d-db78243c9506",
-        "version": [ 1, 0, 1],
-        "min_engine_version": [ 1, 20, 0 ]
+  "format_version": 2,
+  "header": {
+    "name": "ブロックPOSTくん",
+    "description": "指定した範囲のブロックのデータをサーバに投げてくれます",
+    "uuid": "322d19ff-0646-466e-8f1d-db78243c9506",
+    "version": [1, 0, 1],
+    "min_engine_version": [1, 20, 30]
+  },
+  "modules": [
+    {
+      "description": "data",
+      "type": "data",
+      "uuid": "24ceb081-0f25-4032-ba88-492e223d0c90",
+      "version": [1, 0, 0]
     },
-    "modules": [
-        {
-            "description": "data",
-            "type": "data",
-            "uuid": "24ceb081-0f25-4032-ba88-492e223d0c90",
-            "version": [1, 0, 0]
-        },
-        {
-            "description": "javascriptモジュール",
-            "type": "script",
-            "language": "javascript",
-            "uuid": "50f6eaa4-adb7-4b93-9ee8-9bb780a7337c",
-            "entry": "scripts/main.js",
-            "version": [ 1, 0, 0 ]
-        }
-    ],
-    "dependencies": [
-        {
-            "module_name": "@minecraft/server",
-            "version": "1.4.0-beta"
-          },
-          {
-            "module_name": "@minecraft/server-ui",
-            "version": "1.2.0-beta"
-          }
-    ]
+    {
+      "description": "javascriptモジュール",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "50f6eaa4-adb7-4b93-9ee8-9bb780a7337c",
+      "entry": "scripts/main.js",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.6.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0-beta"
+    }
+  ]
 }
