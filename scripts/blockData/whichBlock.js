@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { snow } from "./snow/snow";
 
 /**
  * そのブロックが何のブロックか判別します。
@@ -54,6 +55,9 @@ function whichBlock(block, blockData) {
     }
   }
 
+  if (block === "snow_layer") {
+    return snow(data);
+  }
   return 1;
 }
 
