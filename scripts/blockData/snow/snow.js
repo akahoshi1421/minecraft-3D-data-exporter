@@ -1,6 +1,7 @@
 /**
  * 雪ブロックの詳細を返す
  * @param {Record<string, string | number | boolean>} data
+ * @returns ブロックデータ
  */
 
 function snow(data) {
@@ -20,7 +21,7 @@ function snow(data) {
     case 6:
       return 5.6;
     case 7:
-      return 5.7;
+      return 1;
   }
   return 0;
 }
