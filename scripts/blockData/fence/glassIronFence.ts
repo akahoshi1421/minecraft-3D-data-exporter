@@ -143,7 +143,7 @@ function glassIronFence(x: number, y: number, z: number) {
       }
       break;
     case 4:
-      return 6.4;
+      return 7.4;
   }
 
   return 0;
