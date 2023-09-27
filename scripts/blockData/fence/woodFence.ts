@@ -8,7 +8,6 @@ import { whichBlock } from "../whichBlock";
  */
 
 function woodFence(x: number, y: number, z: number) {
-  let connectCount = 0;
   const checkList = [
     [0, 1],
     [1, 0],
@@ -26,15 +25,19 @@ function woodFence(x: number, y: number, z: number) {
     if (!blockData) return 0;
 
     const block = blockData.type.id.split(":")[1];
-    if (whichBlock(block, blockData, x, y, z, true) === 1) {
-      connectCount++;
+
+    //隣接ブロックが通常ブロックもしくは木のフェンスの場合
+    if (
+      whichBlock(block, blockData, x, y, z, true) === 1 ||
+      whichBlock(block, blockData, x, y, z, true) === 1.1
+    ) {
       hitNeighbors.push(checkCoord);
     }
   });
 
   const hitNeighborsSorted = hitNeighbors.sort();
 
-  switch (connectCount) {
+  switch (hitNeighbors.length) {
     case 0:
       return 6.0;
     case 1:
