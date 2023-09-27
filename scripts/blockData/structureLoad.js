@@ -41,7 +41,7 @@ function structureLoad(player, startPos, endPos) {
         }
 
         const block = blockData.type.id.split(":")[1];
-        zArray.push(whichBlock(block, blockData));
+        zArray.push(whichBlock(block, blockData, x, y, z));
       }
 
       xArray.push(zArray);
