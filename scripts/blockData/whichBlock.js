@@ -1,14 +1,19 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { woodFence } from "./fence/woodFence";
 import { snow } from "./snow/snow";
 
 /**
  * そのブロックが何のブロックか判別します。
  * @param {string} block ブロック名
  * @param {Block} blockData ブロックデータ(JSON)
+ * @param {number} x x座標
+ * @param {number} y y座標
+ * @param {number} z z座標
+ * @param {boolean} isCheck 隣接ブロックチェック時の処理か
  * @returns ブロックデータ(数値)
  */
-function whichBlock(block, blockData) {
+function whichBlock(block, blockData, x, y, z, isCheck = false) {
   const data = blockData.permutation.getAllStates();
 
   if (blockDict.ignoreBlocks.includes(block)) {
@@ -57,6 +62,11 @@ function whichBlock(block, blockData) {
 
   if (block === "snow_layer") {
     return snow(data);
+  }
+
+  if (blockDict.woodFence.includes(block)) {
+    if (isCheck) return 1;
+    else return woodFence(data);
   }
   return 1;
 }

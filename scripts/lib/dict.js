@@ -97,6 +97,20 @@ const blockDict = {
     "pink_carpet",
     "moss_carpet",
   ],
+  woodFence: [
+    "oak_fence",
+    "spruce_fence",
+    "birch_fence",
+    "jungle_fence",
+    "acacia_fence",
+    "dark_oak_fence",
+    "mangrove_fence",
+    "cherry_fence",
+    "bamboo_fence",
+    "nether_brick_fence",
+    "crimson_fence",
+    "warped_fence",
+  ],
 };
 
 export { blockDict };
