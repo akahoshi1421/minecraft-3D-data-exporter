@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { glassIronFence } from "./fence/glassIronFence";
 import { woodFence } from "./fence/woodFence";
 import { snow } from "./snow/snow";
 
@@ -65,8 +66,13 @@ function whichBlock(block, blockData, x, y, z, isCheck = false) {
   }
 
   if (blockDict.woodFence.includes(block)) {
-    if (isCheck) return 1;
+    if (isCheck) return 1.1;
     else return woodFence(data);
+  }
+
+  if (blockDict.glassIronFence.includes(block)) {
+    if (isCheck) return 1.2;
+    else return glassIronFence(data);
   }
   return 1;
 }
