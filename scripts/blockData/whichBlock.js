@@ -67,12 +67,12 @@ function whichBlock(block, blockData, x, y, z, isCheck = false) {
 
   if (blockDict.woodFence.includes(block)) {
     if (isCheck) return 1.1;
-    else return woodFence(data);
+    else return woodFence(x, y, z);
   }
 
   if (blockDict.glassIronFence.includes(block)) {
     if (isCheck) return 1.2;
-    else return glassIronFence(data);
+    else return glassIronFence(x, y, z);
   }
   return 1;
 }
