@@ -3,3 +3,6 @@ node_modules/
 main-archive.js
 
 .vscode/
+
+woodFence.js
+glassIronFence.js
