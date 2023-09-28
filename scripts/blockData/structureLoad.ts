@@ -8,7 +8,11 @@ import { whichBlock } from "./whichBlock";
  * @param { {x: Number, y: Number, z: Number} } endPos 終点座標
  * @returns 構造物データ
  */
-function structureLoad(player, startPos, endPos) {
+function structureLoad(
+  player: Player,
+  startPos: { x: number; y: number; z: number },
+  endPos: { x: number; y: number; z: number }
+) {
   const resultStrcture = [];
 
   const yourWorld = world.getDimension("overworld");

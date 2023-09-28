@@ -15,7 +15,14 @@ import { snow } from "./snow/snow";
  * @param {boolean} isCheck 隣接ブロックチェック時の処理か
  * @returns ブロックデータ(数値)
  */
-function whichBlock(block, blockData, x, y, z, isCheck = false) {
+function whichBlock(
+  block: string,
+  blockData: Block,
+  x: number,
+  y: number,
+  z: number,
+  isCheck = false
+) {
   const data = blockData.permutation.getAllStates();
 
   if (blockDict.ignoreBlocks.includes(block)) {
@@ -80,6 +87,19 @@ function whichBlock(block, blockData, x, y, z, isCheck = false) {
     if (isCheck) return 1.3;
     else return stoneFence(data, x, y, z);
   }
+
+  if (block === "end_portal_frame") {
+    return 9.0;
+  }
+
+  if (blockDict.pressurePlate.includes(block)) {
+    return 10.0;
+  }
+
+  if (block === "enchanting_table") {
+    return 11.0;
+  }
+
   return 1;
 }
 
