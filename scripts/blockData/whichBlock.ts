@@ -34,7 +34,7 @@ function whichBlock(
   }
 
   if (blockDict.halfBlocks.includes(block)) {
-    if (data.top_slot_bit) {
+    if (data.vertical_half === "bottom") {
       return 3.0;
     } else {
       return 3.1;
