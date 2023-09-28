@@ -23,8 +23,8 @@ function glassIronFence(x: number, y: number, z: number) {
     //隣接ブロックが通常ブロックもしくは板ガラスもしくは鉄格子もしくは石のフェンスの場合
     if (
       whichBlock(block, blockData, x, y, z, true) === 1 ||
-      whichBlock(block, blockData, x, y, z, true) === 1.2 //||
-      //   whichBlock(block, blockData, x, y, z, true) === 1.3
+      whichBlock(block, blockData, x, y, z, true) === 1.2 ||
+      whichBlock(block, blockData, x, y, z, true) === 1.3
     ) {
       hitNeighbors.push(checkCoord);
     }
