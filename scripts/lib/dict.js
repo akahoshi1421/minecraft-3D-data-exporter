@@ -131,6 +131,17 @@ const blockDict = {
     "pink_stained_glass_pane",
     "iron_bars",
   ],
+  stoneFence: [
+    "cobblestone_wall",
+    "blackstone_wall",
+    "polished_blackstone_wall",
+    "polished_blackstone_brick_wall",
+    "cobbled_deepslate_wall",
+    "deepslate_tile_wall",
+    "polished_deepslate_wall",
+    "deepslate_brick_wall",
+    "mud_brick_wall",
+  ],
 };
 
 export { blockDict };
