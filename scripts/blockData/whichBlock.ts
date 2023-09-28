@@ -34,7 +34,7 @@ function whichBlock(
   }
 
   if (blockDict.halfBlocks.includes(block)) {
-    if (data.top_slot_bit) {
+    if (data["minecraft:vertical_half"] === "top") {
       return 3.0;
     } else {
       return 3.1;
