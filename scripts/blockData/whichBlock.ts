@@ -34,7 +34,7 @@ function whichBlock(
   }
 
   if (blockDict.halfBlocks.includes(block)) {
-    if (data.vertical_half === "bottom") {
+    if (data.vertical_half === "up") {
       return 3.0;
     } else {
       return 3.1;
