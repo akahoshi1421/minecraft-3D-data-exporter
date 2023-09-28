@@ -4,7 +4,7 @@
  * @returns ブロックデータ
  */
 
-function snow(data) {
+function snow(data: Record<string, string | number | boolean>) {
   switch (data.height) {
     case 0:
       return 5.0;

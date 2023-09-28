@@ -13,7 +13,7 @@ system.runInterval(() => {
   // using native API methods (such as world.sendMessage) are recommended whenever possible.
   const d = world.getDimension("overworld");
   try {
-    const blockData = d.getBlock({ x: 0, y: 0, z: 0 });
+    const blockData = d.getBlock({ x: 0, y: 0, z: 0 })!;
     d.getPlayers()[0].sendMessage(
       `${JSON.stringify(blockData.permutation.getAllStates())}   ${
         blockData.type.id
@@ -44,7 +44,7 @@ world.afterEvents.itemUse.subscribe((event) => {
 
   switch (event.itemStack.typeId) {
     case "minecraft:stick":
-      menu(player).catch(console.error); // Formを表示
+      menu(player); // Formを表示
       break;
 
     case "minecraft:diamond_sword":
@@ -57,7 +57,7 @@ world.afterEvents.itemUse.subscribe((event) => {
 });
 
 /** @param {Player} player */
-function positionRegister(player) {
+function positionRegister(player: Player) {
   //プレイヤーの座標取り出し
   const playerLocation = player.getHeadLocation();
   const [x, y, z] = [
@@ -87,7 +87,7 @@ function positionRegister(player) {
 }
 
 /** @param {Player} player */
-async function menu(player) {
+async function menu(player: Player) {
   const playerLocation = player.getHeadLocation();
 
   const form = new ModalFormData();
@@ -105,10 +105,11 @@ async function menu(player) {
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
 
   if (canceled) return; // キャンセルされていたら処理を抜ける
+  if (!formValues) return;
 
   //メニュー保存
-  email = formValues[0];
-  toggleValue = formValues[1];
+  email = formValues[0] as string;
+  toggleValue = formValues[1] as boolean;
 
   //メールの形が正しくなければ抜ける
   if (

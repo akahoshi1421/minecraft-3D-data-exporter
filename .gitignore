@@ -4,6 +4,6 @@ main-archive.js
 
 .vscode/
 
-woodFence.js
-glassIronFence.js
-stoneFence.js
+*.js
+
+!.eslintrc.js
