@@ -4,6 +4,7 @@ import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
 import { snow } from "./snow/snow";
+import { stair } from "./stair/stair";
 
 /**
  * そのブロックが何のブロックか判別します。
@@ -42,31 +43,7 @@ function whichBlock(
   }
 
   if (blockDict.stairBlocks.includes(block)) {
-    if (!data.upside_down_bit && data.weirdo_direction === 1) {
-      return 4.0;
-    }
-    if (!data.upside_down_bit && data.weirdo_direction === 0) {
-      return 4.1;
-    }
-    if (!data.upside_down_bit && data.weirdo_direction === 3) {
-      return 4.2;
-    }
-    if (!data.upside_down_bit && data.weirdo_direction === 2) {
-      return 4.3;
-    }
-
-    if (data.upside_down_bit && data.weirdo_direction === 1) {
-      return 4.4;
-    }
-    if (data.upside_down_bit && data.weirdo_direction === 0) {
-      return 4.5;
-    }
-    if (data.upside_down_bit && data.weirdo_direction === 3) {
-      return 4.6;
-    }
-    if (data.upside_down_bit && data.weirdo_direction === 2) {
-      return 4.7;
-    }
+    return stair(data, x, y, z, isCheck);
   }
 
   if (block === "snow_layer") {
