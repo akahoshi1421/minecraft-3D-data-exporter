@@ -209,7 +209,7 @@ function stoneFence(
         JSON.stringify(hitNeighborsSorted[1]) === JSON.stringify([0, 1])
       ) {
         return Number(
-          `8.32${data.wall_connection_type_east === "short" ? 1 : 2}${
+          `8.33${data.wall_connection_type_east === "short" ? 1 : 2}${
             data.wall_connection_type_west === "short" ? 1 : 2
           }${data.wall_connection_type_south === "short" ? 1 : 2}`
         );
@@ -222,7 +222,7 @@ function stoneFence(
         JSON.stringify(hitNeighborsSorted[0]) === JSON.stringify([0, -1])
       ) {
         return Number(
-          `8.33${data.wall_connection_type_east === "short" ? 1 : 2}${
+          `8.34${data.wall_connection_type_east === "short" ? 1 : 2}${
             data.wall_connection_type_south === "short" ? 1 : 2
           }${data.wall_connection_type_north === "short" ? 1 : 2}`
         );
