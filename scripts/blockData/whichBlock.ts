@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { anvil } from "./anvil/anvil";
 import { button } from "./button/button";
 import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
@@ -81,6 +82,10 @@ function whichBlock(
 
   if (blockDict.button.includes(block)) {
     return button(data);
+  }
+
+  if (block === "anvil") {
+    return anvil(data);
   }
 
   return 1;
