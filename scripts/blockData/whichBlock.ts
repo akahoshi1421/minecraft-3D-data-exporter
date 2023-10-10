@@ -90,6 +90,7 @@ function whichBlock(
   }
 
   if (blockDict.fencegate.includes(block)) {
+    if (isCheck) return 1.4;
     return fenceGate(data);
   }
 

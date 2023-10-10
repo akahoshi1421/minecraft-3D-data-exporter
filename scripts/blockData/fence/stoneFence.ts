@@ -25,11 +25,12 @@ function stoneFence(
 
     const block = blockData.type.id.split(":")[1];
 
-    //隣接ブロックが通常ブロックもしくは板ガラスもしくは鉄格子もしくは石のフェンスの場合
+    //隣接ブロックが通常ブロックもしくは板ガラスもしくは鉄格子もしくは石のフェンスもしくはフェンスゲートの場合
     if (
       whichBlock(block, blockData, x, y, z, true) === 1 ||
       whichBlock(block, blockData, x, y, z, true) === 1.2 ||
-      whichBlock(block, blockData, x, y, z, true) === 1.3
+      whichBlock(block, blockData, x, y, z, true) === 1.3 ||
+      whichBlock(block, blockData, x, y, z, true) === 1.4
     ) {
       hitNeighbors.push(checkCoord);
     }
