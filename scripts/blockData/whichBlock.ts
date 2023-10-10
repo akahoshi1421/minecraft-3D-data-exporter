@@ -6,6 +6,7 @@ import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
+import { fenceGate } from "./fenceGate/fenceGate";
 import { snow } from "./snow/snow";
 import { stair } from "./stair/stair";
 
@@ -86,6 +87,10 @@ function whichBlock(
 
   if (block === "anvil") {
     return anvil(data);
+  }
+
+  if (blockDict.fencegate.includes(block)) {
+    return fenceGate(data);
   }
 
   return 1;

@@ -174,6 +174,19 @@ const blockDict = {
     "warped_button",
     "polished_blackstone_button",
   ],
+  fencegate: [
+    "fence_gate",
+    "spruce_fence_gate",
+    "birch_fence_gate",
+    "jungle_fence_gate",
+    "acacia_fence_gate",
+    "dark_oak_fence_gate",
+    "mangrove_fence_gate",
+    "cherry_fence_gate",
+    "bamboo_fence_gate",
+    "crimson_fence_gate",
+    "warped_fence_gate",
+  ],
 };
 
 export { blockDict };
