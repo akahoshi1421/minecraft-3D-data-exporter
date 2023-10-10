@@ -159,6 +159,21 @@ const blockDict = {
     "heavy_weighted_pressure_plate",
     "polished_blackstone_pressure_plate",
   ],
+  button: [
+    "wooden_button",
+    "spruce_button",
+    "birch_button",
+    "jungle_button",
+    "acacia_button",
+    "dark_oak_button",
+    "mangrove_button",
+    "cherry_button",
+    "bamboo_button",
+    "stone_button",
+    "crimson_button",
+    "warped_button",
+    "polished_blackstone_button",
+  ],
 };
 
 export { blockDict };

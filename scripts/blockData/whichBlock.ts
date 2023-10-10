@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { button } from "./button/button";
 import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
@@ -76,6 +77,10 @@ function whichBlock(
 
   if (block === "enchanting_table") {
     return 11.0;
+  }
+
+  if (blockDict.button.includes(block)) {
+    return button(data);
   }
 
   return 1;
