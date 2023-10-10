@@ -72,6 +72,11 @@ const blockDict = {
     "dead_bubble_coral",
     "dead_tube_coral",
     "dead_horn_coral",
+    "coral_fan",
+    "coral_fan_dead",
+    "sapling",
+    "mangrove_propaqule",
+    "cherry_sapling",
   ],
   halfBlocks: [
     "stone_block_slab",
