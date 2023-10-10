@@ -15,6 +15,9 @@ const blockDict = {
     "redstone_torch",
     "torch",
     "soul_torch",
+    "tallgrass",
+    "double_plant",
+    "nether_sprouts",
   ],
   halfBlocks: [
     "stone_block_slab",
