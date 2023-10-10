@@ -25,6 +25,12 @@ const blockDict = {
     "pink_retals",
     "wither_rose",
     "torchflower",
+    "vine",
+    "weeping_vines",
+    "twisting_vines",
+    "seagrass",
+    "kelp",
+    "waterlily",
   ],
   halfBlocks: [
     "stone_block_slab",
