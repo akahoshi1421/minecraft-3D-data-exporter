@@ -1,5 +1,6 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
@@ -66,7 +67,7 @@ function whichBlock(
   }
 
   if (block === "end_portal_frame") {
-    return 9.0;
+    return endPortalFrame(data);
   }
 
   if (blockDict.pressurePlate.includes(block)) {

@@ -7,22 +7,22 @@ import { ModalFormData } from "@minecraft/server-ui";
 import { structureLoad } from "./blockData/structureLoad";
 
 // Subscribe to an event that calls every Minecraft tick
-// system.runInterval(() => {
-//   // Spams the chat with "Hello World" with world.sendMessage function in API
-//   // or run a command in overworld dimension
-//   // using native API methods (such as world.sendMessage) are recommended whenever possible.
-//   const d = world.getDimension("overworld");
-//   try {
-//     const blockData = d.getBlock({ x: 0, y: 0, z: 0 })!;
-//     d.getPlayers()[0].sendMessage(
-//       `${JSON.stringify(blockData.permutation.getAllStates())}   ${
-//         blockData.type.id
-//       }`
-//     );
-//   } catch (e) {
-//     d.runCommand(`say ${e}`);
-//   }
-// }, 60);
+system.runInterval(() => {
+  // Spams the chat with "Hello World" with world.sendMessage function in API
+  // or run a command in overworld dimension
+  // using native API methods (such as world.sendMessage) are recommended whenever possible.
+  const d = world.getDimension("overworld");
+  try {
+    const blockData = d.getBlock({ x: 0, y: 0, z: 0 })!;
+    d.getPlayers()[0].sendMessage(
+      `${JSON.stringify(blockData.permutation.getAllStates())}   ${
+        blockData.type.id
+      }`
+    );
+  } catch (e) {
+    d.runCommand(`say ${e}`);
+  }
+}, 60);
 
 //内部処理用座標
 const startPos = { x: 0, y: 0, z: 0 };
