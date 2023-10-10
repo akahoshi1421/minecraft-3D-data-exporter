@@ -11,6 +11,7 @@ const blockDict = {
     "powered_comparator",
     "redstone_wire",
     "lever",
+    "tripwire_hook",
     "standing_sign",
     "redstone_torch",
     "torch",
@@ -96,6 +97,7 @@ const blockDict = {
     "green_candle",
     "red_candle",
     "black_candle",
+    "sea_pickle",
   ],
   halfBlocks: [
     "stone_block_slab",
