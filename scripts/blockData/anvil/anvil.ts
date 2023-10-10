@@ -8,10 +8,10 @@ function anvil(data: Record<string, string | number | boolean>) {
   switch (data["minecraft:cardinal_direction"]) {
     case "east":
     case "west":
-      return 13.1;
+      return 13.0;
     case "north":
     case "south":
-      return 13.2;
+      return 13.1;
   }
   return 0;
 }
