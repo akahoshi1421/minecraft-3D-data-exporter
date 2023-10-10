@@ -18,6 +18,13 @@ const blockDict = {
     "tallgrass",
     "double_plant",
     "nether_sprouts",
+    "crimson_roots",
+    "yellow_flower",
+    "red_flower",
+    "pitcher_plant",
+    "pink_retals",
+    "wither_rose",
+    "torchflower",
   ],
   halfBlocks: [
     "stone_block_slab",
