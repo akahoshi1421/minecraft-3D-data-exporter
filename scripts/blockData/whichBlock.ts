@@ -1,8 +1,12 @@
 import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
+import { anvil } from "./anvil/anvil";
+import { button } from "./button/button";
+import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
+import { fenceGate } from "./fenceGate/fenceGate";
 import { snow } from "./snow/snow";
 import { stair } from "./stair/stair";
 
@@ -66,7 +70,7 @@ function whichBlock(
   }
 
   if (block === "end_portal_frame") {
-    return 9.0;
+    return endPortalFrame(data);
   }
 
   if (blockDict.pressurePlate.includes(block)) {
@@ -75,6 +79,18 @@ function whichBlock(
 
   if (block === "enchanting_table") {
     return 11.0;
+  }
+
+  if (blockDict.button.includes(block)) {
+    return button(data);
+  }
+
+  if (block === "anvil") {
+    return anvil(data);
+  }
+
+  if (blockDict.fencegate.includes(block)) {
+    return fenceGate(data);
   }
 
   return 1;
