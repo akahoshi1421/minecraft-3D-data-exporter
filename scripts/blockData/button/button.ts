@@ -1,5 +1,5 @@
 /**
- * 雪ブロックの詳細を返す
+ * ボタンの詳細を返す
  * @param {Record<string, string | number | boolean>} data
  * @returns ブロックデータ
  */
