@@ -46,6 +46,12 @@ const blockDict = {
     "large_amethyst_bud",
     "small_amethyst_bud",
     "medium_amethyst_bud",
+    "crimson_fungus",
+    "warped_fungus",
+    "web",
+    "turtle_egg",
+    "sniffer_egg",
+    "frog_spawn",
   ],
   halfBlocks: [
     "stone_block_slab",
