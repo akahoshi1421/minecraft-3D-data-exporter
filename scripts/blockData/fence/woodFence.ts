@@ -26,10 +26,11 @@ function woodFence(x: number, y: number, z: number) {
 
     const block = blockData.type.id.split(":")[1];
 
-    //隣接ブロックが通常ブロックもしくは木のフェンスの場合
+    //隣接ブロックが通常ブロックもしくは木のフェンスのもしくはフェンスゲートの場合
     if (
       whichBlock(block, blockData, x, y, z, true) === 1 ||
-      whichBlock(block, blockData, x, y, z, true) === 1.1
+      whichBlock(block, blockData, x, y, z, true) === 1.1 ||
+      whichBlock(block, blockData, x, y, z, true) === 1.4
     ) {
       hitNeighbors.push(checkCoord);
     }
