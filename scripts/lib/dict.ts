@@ -270,6 +270,20 @@ const blockDict = {
     "crimson_fence_gate",
     "warped_fence_gate",
   ],
+  trapDoor: [
+    "trapdoor",
+    "spruce_trapdoor",
+    "birch_trapdoor",
+    "jungle_trapdoor",
+    "acacia_trapdoor",
+    "dark_oak_trapdoor",
+    "mangrove_trapdoor",
+    "cherry_trapdoor",
+    "bamboo_trapdoor",
+    "iron_trapdoor",
+    "crimson_trapdoor",
+    "warped_trapdoor",
+  ],
 };
 
 export { blockDict };
