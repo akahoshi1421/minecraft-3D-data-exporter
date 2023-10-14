@@ -9,6 +9,7 @@ import { woodFence } from "./fence/woodFence";
 import { fenceGate } from "./fenceGate/fenceGate";
 import { snow } from "./snow/snow";
 import { stair } from "./stair/stair";
+import { trapDoor } from "./trapDoor/trapDoor";
 
 /**
  * そのブロックが何のブロックか判別します。
@@ -92,6 +93,10 @@ function whichBlock(
   if (blockDict.fencegate.includes(block)) {
     if (isCheck) return 1.4;
     return fenceGate(data);
+  }
+
+  if (blockDict.trapDoor.includes(block)) {
+    return trapDoor(data);
   }
 
   return 1;
