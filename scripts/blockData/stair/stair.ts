@@ -121,6 +121,8 @@ function stair(
 
     return 4.7;
   }
+
+  return 1;
 }
 
 /**
