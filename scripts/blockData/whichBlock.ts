@@ -2,6 +2,7 @@ import { Block } from "@minecraft/server";
 import { blockDict } from "../lib/dict";
 import { anvil } from "./anvil/anvil";
 import { button } from "./button/button";
+import { door } from "./door/door";
 import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
@@ -28,7 +29,7 @@ function whichBlock(
   y: number,
   z: number,
   isCheck = false
-) {
+): number {
   const data = blockData.permutation.getAllStates();
 
   if (blockDict.ignoreBlocks.includes(block)) {
@@ -97,6 +98,11 @@ function whichBlock(
 
   if (blockDict.trapDoor.includes(block)) {
     return trapDoor(data);
+  }
+
+  if (blockDict.door.includes(block)) {
+    if (isCheck) return door(data, x, y, z, true);
+    return door(data, x, y, z);
   }
 
   return 1;
