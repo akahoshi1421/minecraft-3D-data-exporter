@@ -22,7 +22,7 @@ function door(
   const openBit = data.open_bit;
 
   // ドアの上部は正常なデータを取れないので下準拠にさせる
-  if (data.upper_direction_bit && !isCheck) {
+  if (data.upper_block_bit && !isCheck) {
     const blockData = world
       .getDimension("overworld")
       .getBlock({ x: x, y: y - 1, z: z });
@@ -35,13 +35,13 @@ function door(
 
   switch (direction) {
     case 0:
-      return openBit ? 15.11 : 15.01;
+      return openBit ? 15.21 : 15.01;
     case 1:
-      return openBit ? 15.02 : 15.11;
+      return openBit ? 15.02 : 15.21;
     case 2:
-      return openBit ? 15.12 : 15.02;
+      return openBit ? 15.22 : 15.02;
     case 3:
-      return openBit ? 15.01 : 15.12;
+      return openBit ? 15.01 : 15.22;
   }
 
   return 1;
