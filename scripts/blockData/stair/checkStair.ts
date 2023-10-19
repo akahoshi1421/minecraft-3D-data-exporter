@@ -38,6 +38,8 @@ function checkStair(data: Record<string, string | number | boolean>) {
   if (data.upside_down_bit && data.weirdo_direction === 2) {
     return 4.7;
   }
+
+  return 1;
 }
 
 export { checkStair };

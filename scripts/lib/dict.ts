@@ -284,6 +284,20 @@ const blockDict = {
     "crimson_trapdoor",
     "warped_trapdoor",
   ],
+  door: [
+    "wooden_door",
+    "spruce_door",
+    "birch_door",
+    "jungle_door",
+    "acacia_door",
+    "dark_oak_door",
+    "mangrove_door",
+    "cherry_door",
+    "bamboo_door",
+    "iron_door",
+    "crimson_door",
+    "warped_door",
+  ],
 };
 
 export { blockDict };
