@@ -4,6 +4,7 @@ import { anvil } from "./anvil/anvil";
 import { button } from "./button/button";
 import { door } from "./door/door";
 import { endPortalFrame } from "./endPortalFrame/endPortalFrame";
+import { endRod } from "./endrod/endrod";
 import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
@@ -103,6 +104,10 @@ function whichBlock(
   if (blockDict.door.includes(block)) {
     if (isCheck) return door(data, x, y, z, true);
     return door(data, x, y, z);
+  }
+
+  if (block === "end_rod") {
+    return endRod(data);
   }
 
   return 1;
