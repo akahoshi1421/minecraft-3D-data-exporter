@@ -9,6 +9,7 @@ import { glassIronFence } from "./fence/glassIronFence";
 import { stoneFence } from "./fence/stoneFence";
 import { woodFence } from "./fence/woodFence";
 import { fenceGate } from "./fenceGate/fenceGate";
+import { lightningRod } from "./lightningRod/lightningRod";
 import { snow } from "./snow/snow";
 import { stair } from "./stair/stair";
 import { trapDoor } from "./trapDoor/trapDoor";
@@ -108,6 +109,10 @@ function whichBlock(
 
   if (block === "end_rod") {
     return endRod(data);
+  }
+
+  if (block === "lightning_rod") {
+    return lightningRod(data);
   }
 
   return 1;
