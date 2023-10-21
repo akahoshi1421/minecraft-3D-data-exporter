@@ -107,6 +107,10 @@ function whichBlock(
     return door(data, x, y, z);
   }
 
+  if (block === "grass_path" || block === "farmland") {
+    return 16.0;
+  }
+
   if (block === "end_rod") {
     return endRod(data);
   }
