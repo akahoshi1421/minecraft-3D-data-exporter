@@ -124,9 +124,12 @@ async function menu(player: Player) {
   // サーバに送信しないモードなら抜ける
   if (toggleValue === false) return;
 
+  player.sendMessage("§l§cデータの送信を開始します§r");
   const result = structureLoad(player, startPos, endPos);
 
   player.runCommand(
     `say ${JSON.stringify({ email: email, structure: result })}`
   );
+
+  player.sendMessage("§l§cデータの送信が完了しました§r");
 }
