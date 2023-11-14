@@ -1,6 +1,12 @@
 import { Player, system } from "@minecraft/server";
 import { UserData } from "./types";
 
+/**
+ * サーバに対してデータを切り分けて送信します。
+ * @param {number[][][]} wantSendData 送信したい構造物データ
+ * @param {Player} player プレイヤー情報
+ * @param {string} email 送信先アドレス
+ */
 function serverSend(wantSendData: number[][][], player: Player, email: string) {
   const wantSendDataJson = JSON.stringify(wantSendData);
 
