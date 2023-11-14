@@ -5,6 +5,7 @@
 import { world, Player, system } from "@minecraft/server";
 import { ModalFormData } from "@minecraft/server-ui";
 import { structureLoad } from "./blockData/structureLoad";
+import { serverSend } from "./serverSend";
 
 // Subscribe to an event that calls every Minecraft tick
 // system.runInterval(() => {
@@ -124,9 +125,8 @@ async function menu(player: Player) {
   // サーバに送信しないモードなら抜ける
   if (toggleValue === false) return;
 
+  player.sendMessage("§l§cデータの送信を開始します§r");
   const result = structureLoad(player, startPos, endPos);
 
-  player.runCommand(
-    `say ${JSON.stringify({ email: email, structure: result })}`
-  );
+  serverSend(result, player, email);
 }
