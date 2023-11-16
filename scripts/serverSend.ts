@@ -13,7 +13,13 @@ function serverSend(wantSendData: number[][][], player: Player, email: string) {
   const stringArray: UserData[] = [];
 
   for (let i = 0; i < wantSendDataJson.length; i += 400) {
-    if (i === 0)
+    if (i === 0 && i + 400 >= wantSendDataJson.length) {
+      stringArray.push({
+        email: email,
+        state: 3,
+        data: wantSendDataJson.substring(i, i + 400),
+      });
+    } else if (i === 0)
       stringArray.push({
         email: email,
         state: 0,
