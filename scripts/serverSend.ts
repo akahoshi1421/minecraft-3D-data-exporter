@@ -19,7 +19,7 @@ function serverSend(wantSendData: number[][][], player: Player, email: string) {
         state: 0,
         data: wantSendDataJson.substring(i, i + 400),
       });
-    else if (i + 500 >= wantSendDataJson.length)
+    else if (i + 400 >= wantSendDataJson.length)
       stringArray.push({
         email: email,
         state: 2,
