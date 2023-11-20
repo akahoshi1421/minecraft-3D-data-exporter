@@ -6,8 +6,14 @@ import { UserData } from "./types";
  * @param {number[][][]} wantSendData 送信したい構造物データ
  * @param {Player} player プレイヤー情報
  * @param {string} email 送信先アドレス
+ * @param {number} scale 倍率
  */
-function serverSend(wantSendData: number[][][], player: Player, email: string) {
+function serverSend(
+  wantSendData: number[][][],
+  player: Player,
+  email: string,
+  scale: number
+) {
   const wantSendDataJson = JSON.stringify(wantSendData);
 
   const stringArray: UserData[] = [];
@@ -17,24 +23,28 @@ function serverSend(wantSendData: number[][][], player: Player, email: string) {
       stringArray.push({
         email: email,
         state: 3,
+        scale: scale,
         data: wantSendDataJson.substring(i, i + 400),
       });
     } else if (i === 0)
       stringArray.push({
         email: email,
         state: 0,
+        scale: scale,
         data: wantSendDataJson.substring(i, i + 400),
       });
     else if (i + 400 >= wantSendDataJson.length)
       stringArray.push({
         email: email,
         state: 2,
+        scale: scale,
         data: wantSendDataJson.substring(i, i + 400),
       });
     else
       stringArray.push({
         email: email,
         state: 1,
+        scale: scale,
         data: wantSendDataJson.substring(i, i + 400),
       });
   }
