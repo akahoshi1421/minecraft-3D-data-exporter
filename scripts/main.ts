@@ -31,6 +31,7 @@ const endPos = { x: 0, y: 0, z: 0 };
 
 //メニュー保存用
 let email = "";
+let scale = 1;
 let toggleValue = false;
 
 // 始点終点フラグ(始点がfalse、終点がtrue)
@@ -101,6 +102,13 @@ async function menu(player: Player) {
     "hoge@example.com",
     email
   );
+  form.slider(
+    "大きさを選択してください(初期値は1ブロック1cm)",
+    0.1,
+    10,
+    0.1,
+    scale
+  );
   form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
@@ -110,7 +118,8 @@ async function menu(player: Player) {
 
   //メニュー保存
   email = formValues[0] as string;
-  toggleValue = formValues[1] as boolean;
+  scale = formValues[1] as number;
+  toggleValue = formValues[2] as boolean;
 
   //メールの形が正しくなければ抜ける
   if (
@@ -128,5 +137,5 @@ async function menu(player: Player) {
   player.sendMessage("§l§cデータの送信を開始します§r");
   const result = structureLoad(player, startPos, endPos);
 
-  serverSend(result, player, email);
+  serverSend(result, player, email, scale);
 }
