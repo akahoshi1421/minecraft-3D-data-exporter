@@ -119,6 +119,10 @@ function whichBlock(
     return lightningRod(data);
   }
 
+  if (block === "daylight_detector" || block === "daylight_detector_inverted") {
+    return 19.0;
+  }
+
   return 1;
 }
 

@@ -102,13 +102,7 @@ async function menu(player: Player) {
     "hoge@example.com",
     email
   );
-  form.slider(
-    "大きさを選択してください(初期値は1ブロック1cm)",
-    0.1,
-    10,
-    0.1,
-    scale
-  );
+  form.slider("倍率§c(初期値は1ブロック1cm)§r", 0.1, 3, 0.1, scale);
   form.toggle("サーバに送信しますか？", toggleValue);
 
   const { canceled, formValues } = await form.show(player); // 表示する selectionに何番目のボタンを押したかが入る
@@ -120,6 +114,9 @@ async function menu(player: Player) {
   email = formValues[0] as string;
   scale = formValues[1] as number;
   toggleValue = formValues[2] as boolean;
+
+  // 切り捨て
+  scale = Math.floor(scale * 10) / 10;
 
   //メールの形が正しくなければ抜ける
   if (
