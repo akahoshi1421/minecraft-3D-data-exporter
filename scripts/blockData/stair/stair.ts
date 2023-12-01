@@ -64,9 +64,9 @@ function stair(
       return 4.813;
     if (searchBlock(x, y, z + 1) === 4.1 && searchBlock(x - 1, y, z) !== 4.3)
       return 4.811;
-    if (searchBlock(x, y, z - 1) === 4.1 && searchBlock(x - 1, y, z) !== 4.3)
+    if (searchBlock(x, y, z - 1) === 4.0 && searchBlock(x - 1, y, z) !== 4.3)
       return 4.823;
-    if (searchBlock(x, y, z - 1) === 4.0 && searchBlock(x + 1, y, z) !== 4.3)
+    if (searchBlock(x, y, z - 1) === 4.1 && searchBlock(x + 1, y, z) !== 4.3)
       return 4.821;
 
     return 4.3;
